@@ -1,9 +1,10 @@
-package com.canvas.krishna.quoteengine;
+package com.canvas.krishna.quoteengine.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.canvas.krishna.quoteengine.R;
 import com.canvas.krishna.quoteengine.app.QuoteApplication;
 import com.canvas.krishna.quoteengine.models.Quote;
 import com.canvas.krishna.quoteengine.network.QuoteApi;

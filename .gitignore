@@ -43,3 +43,6 @@ captures/
 
 #Configuration
 Config.java
+
+#Max
+*.DS_Store

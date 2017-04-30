@@ -58,7 +58,7 @@ public class NetworkModule {
         OkHttpClient client = httpClient.build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(converter)
                 .client(client)
                 .build();
 
