@@ -62,4 +62,10 @@ public class MainPresenter implements MainContract.Presenter{
             }
         });
     }
+
+    @Override
+    public void onRefresh() {
+        //Called when user swipes refresh layout
+        loadQuotes();
+    }
 }

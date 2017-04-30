@@ -1,5 +1,6 @@
 package com.canvas.krishna.quoteengine.ui;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.canvas.krishna.quoteengine.R;
 import com.canvas.krishna.quoteengine.app.QuoteApplication;
@@ -32,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @BindView(R.id.activity_main_quote_recycler_view)
     RecyclerView quoteRecyclerView;
 
+    @BindView(R.id.activity_main_swipe_refresh)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     private Unbinder mUnbinder;
     private RecyclerViewAdapter mAdapter;
 
@@ -50,17 +55,23 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     protected void onResume() {
         super.onResume();
         setupQuoteRecyclerView();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.onRefresh();
+            }
+        });
         presenter.start();
     }
 
     @Override
     public void showLoading() {
-
+        swipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideLoading() {
-
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -70,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void showErrorMessage(String err) {
-
+        Toast.makeText(this, err, Toast.LENGTH_SHORT).show();
     }
 
     private void setupQuoteRecyclerView(){

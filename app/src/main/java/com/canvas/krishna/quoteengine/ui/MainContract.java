@@ -20,5 +20,6 @@ public interface MainContract {
         void setView(View view);
         void start();
         void loadQuotes();
+        void onRefresh();
     }
 }
