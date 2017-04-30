@@ -38,10 +38,12 @@ public class MainPresenter implements MainContract.Presenter{
 
     @Override
     public void start() {
-        getQuotes();
+        loadQuotes();
     }
 
-    private void getQuotes(){
+    @Override
+    public void loadQuotes(){
+        view.showLoading();
         quoteApi.getQuotes("famous", 10).enqueue(new Callback<List<Quote>>() {
             @Override
             public void onResponse(Call<List<Quote>> call, Response<List<Quote>> response) {
@@ -49,7 +51,8 @@ public class MainPresenter implements MainContract.Presenter{
                     Log.e(LOG_TAG, "Retrofit response error");
                 } else {
                     List<Quote> quotes = response.body();
-                    Log.v(LOG_TAG, quotes.get(0).toString());
+                    view.showQuotes(quotes);
+                    view.hideLoading();
                 }
             }
 
