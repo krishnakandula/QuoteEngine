@@ -75,8 +75,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void showQuotes(List<Quote> quotes) {
-        mAdapter.setQuotes(quotes);
+    public void showQuotes(List<Quote> quotes, boolean additionalQuotes) {
+        if(!additionalQuotes)
+            mAdapter.setQuotes(quotes);
+        else
+            mAdapter.addQuotes(quotes);
     }
 
     @Override
@@ -113,6 +116,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         @Override
         public void onBindViewHolder(QuoteViewHolder holder, int position) {
             holder.bind(quotes.get(position));
+            //If user is at end of list, use callback
+            if(position == quotes.size() - 1){
+                presenter.onLoadMoreQuotes();
+            }
         }
 
         @Override

@@ -12,14 +12,15 @@ public interface MainContract {
     interface View {
         void showLoading();
         void hideLoading();
-        void showQuotes(List<Quote> quotes);
+        void showQuotes(List<Quote> quotes, boolean reset);
         void showErrorMessage(String err);
     }
 
     interface Presenter {
         void setView(View view);
         void start();
-        void loadQuotes();
+        void loadQuotes(boolean additionalQuotes);
         void onRefresh();
+        void onLoadMoreQuotes();
     }
 }

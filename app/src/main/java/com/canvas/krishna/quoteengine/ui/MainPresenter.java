@@ -38,20 +38,21 @@ public class MainPresenter implements MainContract.Presenter{
 
     @Override
     public void start() {
-        loadQuotes();
+        loadQuotes(false);
     }
 
     @Override
-    public void loadQuotes(){
+    public void loadQuotes(final boolean additionalQuotes){
         view.showLoading();
         quoteApi.getQuotes("famous", 10).enqueue(new Callback<List<Quote>>() {
             @Override
             public void onResponse(Call<List<Quote>> call, Response<List<Quote>> response) {
                 if(response.code() != 200){
                     Log.e(LOG_TAG, "Retrofit response error");
+                    view.showErrorMessage("Couldn't load quotes");
                 } else {
                     List<Quote> quotes = response.body();
-                    view.showQuotes(quotes);
+                    view.showQuotes(quotes, additionalQuotes);
                     view.hideLoading();
                 }
             }
@@ -59,6 +60,7 @@ public class MainPresenter implements MainContract.Presenter{
             @Override
             public void onFailure(Call<List<Quote>> call, Throwable t) {
                 Log.e(LOG_TAG, "Retrofit response error");
+                view.showErrorMessage("Couldn't load quotes");
             }
         });
     }
@@ -66,6 +68,12 @@ public class MainPresenter implements MainContract.Presenter{
     @Override
     public void onRefresh() {
         //Called when user swipes refresh layout
-        loadQuotes();
+        loadQuotes(false);
+    }
+
+    @Override
+    public void onLoadMoreQuotes() {
+        //Called when user is at end of quotes list and new quotes need to be loaded
+        loadQuotes(true);
     }
 }
