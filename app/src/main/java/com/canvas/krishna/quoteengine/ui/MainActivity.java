@@ -17,11 +17,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainContract.View{
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     @Inject
-    QuoteApi quoteApi;
+    MainContract.Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,22 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ((QuoteApplication) getApplication()).getAppComponent().inject(this);
-
-        quoteApi.getQuotes("famous", 10).enqueue(new Callback<List<Quote>>() {
-            @Override
-            public void onResponse(Call<List<Quote>> call, Response<List<Quote>> response) {
-                if(response.code() != 200){
-                    Log.e(LOG_TAG, "Retrofit response error");
-                } else {
-                    List<Quote> quotes = response.body();
-                    Log.v(LOG_TAG, quotes.get(0).toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Quote>> call, Throwable t) {
-                Log.e(LOG_TAG, "Retrofit response error");
-            }
-        });
+        presenter.setView(this);
+        presenter.start();
     }
 }

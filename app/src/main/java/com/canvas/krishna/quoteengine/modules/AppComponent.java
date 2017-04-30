@@ -1,6 +1,8 @@
 package com.canvas.krishna.quoteengine.modules;
 
 import com.canvas.krishna.quoteengine.ui.MainActivity;
+import com.canvas.krishna.quoteengine.ui.MainContract;
+import com.canvas.krishna.quoteengine.ui.MainPresenter;
 
 import javax.inject.Singleton;
 
@@ -13,4 +15,5 @@ import dagger.Component;
 @Component(modules = {AppModule.class, NetworkModule.class, PresenterModule.class})
 public interface AppComponent {
     void inject(MainActivity target);
+    void inject(MainPresenter target);
 }
