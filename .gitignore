@@ -36,6 +36,10 @@ captures/
 *.iml
 .idea/workspace.xml
 .idea/libraries/
+.idea/kotlinc.xml
 
 # Keystore files
 *.jks
+
+#Configuration
+Config.java
